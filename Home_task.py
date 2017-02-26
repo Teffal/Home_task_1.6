@@ -1,22 +1,21 @@
-# Ver. 2017.02.26
 def file_cook_book(my_file_path):
     with open(my_file_path, 'r', encoding='UTF8') as f:
         line = f.readline()
         cook_book = dict()
         while line:
-            while len(line.strip()) == 0:
+            while not len(line.strip()):
                 line = f.readline()
             my_kye = line.strip()
             list_ingredients = []
-            line = f.readline()
-            for i in range(int(line.strip())):
+            ingridients_num = int(f.readline().strip())
+            for _ in range(ingridients_num):
                 value_dict = f.readline().strip().split('|')
                 ingredient_dict = {
                     'ingredient_name': value_dict[0],
                     'quantity': int(value_dict[1]),
                     'measure': value_dict[2]}
                 list_ingredients.append(ingredient_dict)
-            cook_book.update({my_kye: list_ingredients})
+            cook_book[my_kye] = list_ingredients
             line = f.readline()
     return cook_book
 
@@ -38,7 +37,7 @@ def print_shop_list(shop_list):
 
 def create_shop_list():
     my_file_path = input('Enter the path to your file (default path: Book_cook.txt):')
-    if len(my_file_path) == 0:
+    if not my_file_path:
         my_file_path = 'Book_cook.txt'
     person_count = int(input('Enter count of person: '))
     dishes = input('Enter dishes for one person (you can list separated by "," without space): ').lower().split(',')
